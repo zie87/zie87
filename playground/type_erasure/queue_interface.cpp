@@ -17,7 +17,7 @@ struct logger<true> {
 }  // namespace detail
 
 inline void log(const char* msg) noexcept {
-    static constexpr bool enable_log = true;
+    static constexpr bool enable_log = false;
     detail::logger<enable_log>::write(msg);
 }
 
@@ -76,7 +76,15 @@ struct executer {
     motorization m_mot{m_queue};
 };
 
-int main() {
+#include "ubench.h"
+
+
+UBENCH_EX(sink, interface_sink) {
     executer ex{};
-    ex.do_something();
+
+  UBENCH_DO_BENCHMARK() {
+      ex.do_something();
+  }
+
 }
+UBENCH_MAIN();
